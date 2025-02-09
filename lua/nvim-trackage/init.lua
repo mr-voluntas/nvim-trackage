@@ -1,6 +1,6 @@
-local file_utils = require("file-utils")
-local floating_window = require("floating-window")
-local trackage_data = require("trackage-data")
+local file_utils = require("nvim-trackage/file-utils")
+local floating_window = require("nvim-trackage/floating-window")
+local trackage_data = require("nvim-trackage/trackage-data")
 
 local M = {}
 

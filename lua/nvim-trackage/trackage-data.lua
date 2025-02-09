@@ -1,4 +1,4 @@
-local file_utils = require("file-utils")
+local file_utils = require("nvim-trackage/file-utils")
 
 local trackage_data = {}
 

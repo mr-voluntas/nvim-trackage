@@ -29,7 +29,7 @@ return {
 }
 ```
 
-### Using Packer (Optional)
+### Using Packer
 ```lua
 use {
 	"mr-voluntas/nvim-trackage",
@@ -57,7 +57,7 @@ require("nvim-trackage").setup({ time_record_file = "./trackage.json" })
 
 - `:OpenTrackage` → Opens the floating window displaying trackage info
 
-### Keybindings (Optional)
+### Keybindings
 
 You can add this to your Neovim configuration:
 

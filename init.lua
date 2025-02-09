@@ -8,7 +8,11 @@ M.opts = {
 	time_record_file = "./trackage.json",
 }
 
-M.setup = function()
+M.setup = function(opt)
+	if opt.time_record_file and type(opt.time_record_file) == "string" then
+		M.opts.time_record_file = opt.time_record_file
+	end
+
 	local data = trackage_data.get(M.opts.time_record_file)
 
 	vim.api.nvim_create_user_command("OpenTrackage", function()

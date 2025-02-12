@@ -11,9 +11,21 @@ A little plugin which records how long you use particular file types / languages
 
 ## 🚀 Features
 
-- ✅ Records the time you spend inside a buffer for each file type / language.
-- ✅ Stops / starts the timer when jumping between buffers.
-- ✅ Very basic floating window which displays the file type / language and usage time.
+- ✅ Tracks the time you spend using different file types & languages.
+- ✅ Starts recording upon entering the buffer, stops when leaving it.
+- ✅ Provides a floating window to display the metrics in hours/mins/seconds format.
+- ✅ Data is stored within a JSON file.
+
+
+Example floating window contents
+```txt
+json: 3 hours 34 mins 10 seconds
+md: 1 hour 57 mins 29 seconds
+go: 2 hours 17 mins 56 seconds
+txt: 41 mins 19 seconds
+lua: 2 hours 47 mins 50 seconds
+java: 68 hours 46 mins 40 seconds
+```
 
 ---
 
@@ -55,7 +67,8 @@ require("nvim-trackage").setup({ time_record_file = "./trackage.json" })
 
 ### Basic Commands
 
-- `:OpenTrackage` → Opens the floating window displaying trackage info
+- `:OpenTrackage` → Opens the floating window displaying trackage info. 
+
 
 ### Keybindings
 

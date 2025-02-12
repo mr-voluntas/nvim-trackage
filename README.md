@@ -1,6 +1,6 @@
 # nvim-trackage 
 
-A little plugin which records how long you use particular file types / languages.
+A little plugin which tracks how long you use file types / languages.
 
 [track] + langu[age] = trackage
 

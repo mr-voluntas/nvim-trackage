@@ -1,12 +1,12 @@
 local floating_window = {}
 
-floating_window.table_to_lines = function(data, file_type)
+floating_window.table_to_lines = function(trackage_data)
 	local lines = {}
 
-	for language, second in pairs(data) do
-		local hours = math.floor(second / 3600)
-		local minutes = math.floor((second % 3600) / 60)
-		local seconds = second % 60
+	for language, time in pairs(trackage_data) do
+		local hours = math.floor(time / 3600)
+		local minutes = math.floor((time % 3600) / 60)
+		local seconds = time % 60
 
 		local time_str = {}
 
@@ -20,17 +20,13 @@ floating_window.table_to_lines = function(data, file_type)
 			table.insert(time_str, seconds .. (seconds == 1 and " second" or " seconds"))
 		end
 
-		if file_type == language then
-			table.insert(lines, tostring("> " .. language) .. ": " .. tostring(table.concat(time_str, " ")))
-		else
-			table.insert(lines, tostring(language) .. ": " .. tostring(table.concat(time_str, " ")))
-		end
+		table.insert(lines, tostring(language) .. ": " .. tostring(table.concat(time_str, " ")))
 	end
 
 	return lines
 end
 
-floating_window.create = function(data, file_type)
+floating_window.open = function(trackage_data)
 	local buf = vim.api.nvim_create_buf(false, true)
 
 	local width = vim.o.columns
@@ -52,7 +48,7 @@ floating_window.create = function(data, file_type)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, floating_window.table_to_lines(data, file_type))
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, floating_window.table_to_lines(trackage_data))
 
 	vim.api.nvim_buf_set_keymap(buf, "n", "<esc>", "<Cmd>bd!<CR>", { noremap = true, silent = true })
 

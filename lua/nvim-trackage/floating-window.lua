@@ -1,6 +1,6 @@
-local floating_window = {}
+local M = {}
 
-floating_window.table_to_lines = function(trackage_data)
+M.table_to_lines = function(trackage_data)
 	local lines = {}
 
 	for language, time in pairs(trackage_data) do
@@ -26,7 +26,7 @@ floating_window.table_to_lines = function(trackage_data)
 	return lines
 end
 
-floating_window.open = function(trackage_data)
+M.open = function(trackage_data)
 	local buf = vim.api.nvim_create_buf(false, true)
 
 	local width = vim.o.columns
@@ -48,11 +48,11 @@ floating_window.open = function(trackage_data)
 
 	local win = vim.api.nvim_open_win(buf, true, opts)
 
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, floating_window.table_to_lines(trackage_data))
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, M.table_to_lines(trackage_data))
 
 	vim.api.nvim_buf_set_keymap(buf, "n", "<esc>", "<Cmd>bd!<CR>", { noremap = true, silent = true })
 
 	return win, buf
 end
 
-return floating_window
+return M

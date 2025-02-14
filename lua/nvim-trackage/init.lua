@@ -1,5 +1,6 @@
 local file_utils = require("nvim-trackage/file-utils")
 local floating_window = require("nvim-trackage/floating-window")
+local daily = require("nvim-trackage/daily")
 
 local M = {}
 
@@ -15,7 +16,7 @@ M.setup = function(opt)
 		M.opts.time_record_file = opt.time_record_file
 	end
 
-	local trackage_data = file_utils.get_data(M.opts.time_record_file)
+	local trackage_data = file_utils.get_file_contents(M.opts.time_record_file)
 
 	vim.api.nvim_create_user_command("OpenTrackage", function()
 		floating_window.open(trackage_data)
@@ -37,10 +38,13 @@ M.setup = function(opt)
 		group = TrackageGroup,
 		callback = function()
 			local file_type = file_utils.get_file_type_in_buffer()
-			if file_type ~= "not a file" then
-				trackage_data[file_type] = (trackage_data[file_type] or 0) + os.difftime(os.time(), timer)
 
-				file_utils.update_data(M.opts.time_record_file, trackage_data)
+			if file_type ~= "not a file" then
+				local time_in_buffer = os.difftime(os.time(), timer)
+				-- trackage_data[file_type] = (trackage_data[file_type] or 0) + time_in_buffer
+
+				-- file_utils.update_file(M.opts.time_record_file, trackage_data)
+				daily.update_daily_trackage(M.opts.time_record_file, file_type, time_in_buffer)
 			end
 		end,
 	})

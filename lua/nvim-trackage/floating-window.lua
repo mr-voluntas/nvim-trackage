@@ -1,28 +1,23 @@
 local M = {}
 
-local function to_string(trackage_totals)
-	local lines = {}
+local function to_string(language, time)
+	local hours = math.floor(time / 3600)
+	local minutes = math.floor((time % 3600) / 60)
+	local seconds = time % 60
 
-	for language, time in pairs(trackage_totals) do
-		local hours = math.floor(time / 3600)
-		local minutes = math.floor((time % 3600) / 60)
-		local seconds = time % 60
+	local time_str = {}
 
-		local time_str = {}
-
-		if hours > 0 then
-			table.insert(time_str, hours .. (hours == 1 and " hour" or " hours"))
-		end
-		if minutes > 0 then
-			table.insert(time_str, minutes .. (minutes == 1 and " min" or " mins"))
-		end
-		if seconds > 0 or (#time_str == 0) then
-			table.insert(time_str, seconds .. (seconds == 1 and " second" or " seconds"))
-		end
-
-		table.insert(lines, tostring(language) .. ": " .. tostring(table.concat(time_str, " ")))
+	if hours > 0 then
+		table.insert(time_str, hours .. (hours == 1 and " hour" or " hours"))
 	end
-	return lines
+	if minutes > 0 then
+		table.insert(time_str, minutes .. (minutes == 1 and " min" or " mins"))
+	end
+	if seconds > 0 or (#time_str == 0) then
+		table.insert(time_str, seconds .. (seconds == 1 and " second" or " seconds"))
+	end
+
+	return tostring(language) .. ": " .. tostring(table.concat(time_str, " "))
 end
 
 M.summarise_daily = function(trackage_data)
@@ -36,7 +31,13 @@ M.summarise_daily = function(trackage_data)
 			trackage_totals[language] = (trackage_totals[language] or 0) + time
 		end
 	end
-	return to_string(trackage_totals)
+
+	local lines = {}
+	table.insert(lines, "---- Trackage Totals ----")
+	for language, time in pairs(trackage_totals) do
+		table.insert(lines, to_string(language, time))
+	end
+	return lines
 end
 
 M.open = function(trackage_data)

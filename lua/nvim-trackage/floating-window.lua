@@ -3,27 +3,29 @@ local M = {}
 M.table_to_lines = function(trackage_data)
 	local lines = {}
 
-	for language, time in pairs(trackage_data) do
-		local hours = math.floor(time / 3600)
-		local minutes = math.floor((time % 3600) / 60)
-		local seconds = time % 60
+	for _, data in pairs(trackage_data) do
+		for language, time in pairs(data) do
+			local hours = math.floor(time / 3600)
+			local minutes = math.floor((time % 3600) / 60)
+			local seconds = time % 60
 
-		local time_str = {}
+			local time_str = {}
 
-		if hours > 0 then
-			table.insert(time_str, hours .. (hours == 1 and " hour" or " hours"))
-		end
-		if minutes > 0 then
-			table.insert(time_str, minutes .. (minutes == 1 and " min" or " mins"))
-		end
-		if seconds > 0 or (#time_str == 0) then
-			table.insert(time_str, seconds .. (seconds == 1 and " second" or " seconds"))
+			if hours > 0 then
+				table.insert(time_str, hours .. (hours == 1 and " hour" or " hours"))
+			end
+			if minutes > 0 then
+				table.insert(time_str, minutes .. (minutes == 1 and " min" or " mins"))
+			end
+			if seconds > 0 or (#time_str == 0) then
+				table.insert(time_str, seconds .. (seconds == 1 and " second" or " seconds"))
+			end
+
+			table.insert(lines, tostring(language) .. ": " .. tostring(table.concat(time_str, " ")))
 		end
 
-		table.insert(lines, tostring(language) .. ": " .. tostring(table.concat(time_str, " ")))
+		return lines
 	end
-
-	return lines
 end
 
 M.open = function(trackage_data)

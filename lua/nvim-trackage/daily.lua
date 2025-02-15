@@ -14,11 +14,6 @@ M.update_daily_trackage = function(filename, filetype, time)
 			contents[os.date("%d-%m-%Y")] = {}
 		end
 		contents[os.date("%d-%m-%Y")][filetype] = (contents[os.date("%d-%m-%Y")][filetype] or 0) + time
-	else
-		vim.notify(filename)
-		vim.notify(filetype)
-		vim.notify(time)
-		vim.notify(vim.inspect(contents))
 	end
 
 	file_utils.update_file(filename, contents)
